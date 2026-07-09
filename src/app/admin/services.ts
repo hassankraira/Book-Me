@@ -1,13 +1,11 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
 import { ServiceItem } from '../core/models';
 
 @Component({
   selector: 'app-admin-services',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-7xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -74,8 +72,6 @@ import { ServiceItem } from '../core/models';
             </table>
           </div>
         </div>
-
-        
       }
     </div>
   `,
@@ -92,10 +88,7 @@ export class AdminServices implements OnInit {
   private loadServices(): void {
     this.loading.set(true);
     this.api.getAllServicesWithDeleted().subscribe({
-      next: (res) => {
-        this.services.set(res.data);
-        this.loading.set(false);
-      },
+      next: (res) => { this.services.set(res.data); this.loading.set(false); },
       error: () => this.loading.set(false),
     });
   }

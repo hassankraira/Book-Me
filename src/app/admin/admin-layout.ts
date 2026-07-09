@@ -1,21 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../core/services/auth.service';
-
-interface AdminNavItem {
-  label: string;
-  route: string;
-  icon: string;
-}
 
 @Component({
   selector: 'app-admin-layout',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
     <div class="flex bg-slate-50">
-      <!-- Desktop sidebar -->
       <aside class="hidden lg:flex lg:flex-col w-64 shrink-0 bg-white border-r border-slate-200 shadow-sm">
         <nav class="flex-1 px-3 pt-6 space-y-1 overflow-y-auto">
           @for (item of navItems; track item.route) {
@@ -34,9 +25,7 @@ interface AdminNavItem {
         </nav>
       </aside>
 
-      <!-- Main content -->
       <main class="flex-1 min-h-screen">
-        <!-- Mobile header -->
         <div class="lg:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-slate-200">
           <button (click)="toggleMobileMenu()" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-all">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -53,7 +42,6 @@ interface AdminNavItem {
           </div>
         </div>
 
-        <!-- Desktop top bar -->
         <div class="hidden lg:flex items-center justify-end gap-3 px-6 py-4 border-b border-slate-100 bg-white">
           <a routerLink="/Home"
             class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all">
@@ -68,7 +56,6 @@ interface AdminNavItem {
 
         <router-outlet />
 
-        <!-- Mobile sidebar overlay -->
         @if (mobileMenuOpen()) {
           <div class="fixed inset-0 z-50 lg:hidden">
             <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" (click)="closeMobileMenu()"></div>
@@ -110,7 +97,7 @@ export class AdminLayout {
 
   readonly mobileMenuOpen = signal(false);
 
-  readonly navItems: AdminNavItem[] = [
+  readonly navItems = [
     { label: 'Dashboard', route: '/admin/dashboard', icon: '⚙' },
     { label: 'Users', route: '/admin/users', icon: '👥' },
     { label: 'Services', route: '/admin/services', icon: '🛠️' },
@@ -121,11 +108,6 @@ export class AdminLayout {
     { label: 'Payments', route: '/admin/payments', icon: '💳' },
   ];
 
-  toggleMobileMenu(): void {
-    this.mobileMenuOpen.update((v) => !v);
-  }
-
-  closeMobileMenu(): void {
-    this.mobileMenuOpen.set(false);
-  }
+  toggleMobileMenu(): void { this.mobileMenuOpen.update((v) => !v); }
+  closeMobileMenu(): void { this.mobileMenuOpen.set(false); }
 }

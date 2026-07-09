@@ -2,17 +2,8 @@
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 
-interface DashboardCard {
-  label: string;
-  route: string;
-  icon: string;
-  desc: string;
-  color: string;
-}
-
 @Component({
   selector: 'app-admin-dashboard',
-  standalone: true,
   imports: [RouterLink],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-7xl mx-auto">
@@ -101,7 +92,7 @@ export class AdminDashboard implements OnInit {
   readonly totalRevenue = signal('0.00');
   readonly loading = signal(true);
 
-  readonly cards: DashboardCard[] = [
+  readonly cards = [
     { label: 'Users', route: '/admin/users', icon: '👥', desc: 'Manage all platform users', color: 'bg-vibe-50 group-hover:bg-vibe-100' },
     { label: 'Services', route: '/admin/services', icon: '🛠️', desc: 'View and manage all services', color: 'bg-vibe-50 group-hover:bg-vibe-100' },
     { label: 'Categories', route: '/admin/categories', icon: '📂', desc: 'Organize service categories', color: 'bg-vibe-50 group-hover:bg-vibe-100' },
@@ -111,9 +102,7 @@ export class AdminDashboard implements OnInit {
     { label: 'Payments', route: '/admin/payments', icon: '💳', desc: 'View payment transactions', color: 'bg-vibe-50 group-hover:bg-vibe-100' },
   ];
 
-  ngOnInit(): void {
-    this.loadStats();
-  }
+  ngOnInit(): void { this.loadStats(); }
 
   private loadStats(): void {
     this.loading.set(true);

@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
@@ -7,8 +6,7 @@ import { SubscriptionPlan } from '../core/models';
 
 @Component({
   selector: 'app-admin-subscription-plans',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-5xl mx-auto">
       <div class="flex items-center gap-4 mb-6">
@@ -18,7 +16,6 @@ import { SubscriptionPlan } from '../core/models';
           <p class="text-sm text-slate-400 mt-0.5">Create and manage subscription tiers for providers</p>
         </div>
       </div>
-        <!-- Form -->
         <div class="rounded-lg bg-white shadow-sm border border-slate-100 p-5 mb-6">
           <h2 class="text-base font-bold text-slate-900 mb-4">{{ editId ? 'Edit Plan' : 'New Plan' }}</h2>
           <form (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -151,4 +148,3 @@ export class AdminSubscriptionPlans implements OnInit {
     });
   }
 }
-

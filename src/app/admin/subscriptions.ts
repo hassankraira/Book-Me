@@ -1,12 +1,11 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { Subscription } from '../core/models';
 
 @Component({
   selector: 'app-admin-subscriptions',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [DatePipe],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-7xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">

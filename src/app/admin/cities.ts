@@ -1,15 +1,12 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
 import { City } from '../core/models';
 
-
 @Component({
   selector: 'app-admin-cities',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-3xl mx-auto">
       <div class="flex items-center gap-4 mb-6">
@@ -133,4 +130,3 @@ export class AdminCities implements OnInit {
     });
   }
 }
-

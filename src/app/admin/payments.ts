@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { Payment } from '../core/models';
-
 import { PaginationComponent } from '../shared/components/pagination.component';
 
 @Component({
   selector: 'app-admin-payments',
-  standalone: true,
   imports: [CommonModule, FormsModule, PaginationComponent],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-7xl mx-auto">

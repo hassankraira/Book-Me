@@ -1,15 +1,12 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
 import { Category } from '../core/models';
 
-
 @Component({
   selector: 'app-admin-categories',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-5xl mx-auto">
       <div class="flex items-center gap-4 mb-6">
@@ -19,7 +16,6 @@ import { Category } from '../core/models';
           <p class="text-sm text-slate-400 mt-0.5">Organize services into categories</p>
         </div>
       </div>
-        <!-- Add/Edit Form -->
         <div class="rounded-2xl bg-white border border-slate-100 p-6 mb-8 shadow-sm">
           <h2 class="text-lg font-bold text-slate-900 mb-5">{{ editId ? 'Edit Category' : 'Add New Category' }}</h2>
           <form (ngSubmit)="onSubmit()">
@@ -178,10 +174,7 @@ export class AdminCategories implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  removeImage(): void {
-    this.formImageFile = null;
-    this.formImagePreview.set(null);
-  }
+  removeImage(): void { this.formImageFile = null; this.formImagePreview.set(null); }
 
   onSubmit(): void {
     this.submitted.set(true);
@@ -211,4 +204,3 @@ export class AdminCategories implements OnInit {
     });
   }
 }
-

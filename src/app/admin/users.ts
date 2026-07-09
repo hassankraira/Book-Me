@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ToastService } from '../core/services/toast.service';
@@ -9,8 +8,7 @@ type RoleFilter = 'all' | 'User' | 'ServiceProvider';
 
 @Component({
   selector: 'app-admin-users',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="px-4 sm:px-6 py-16 max-w-7xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -24,7 +22,6 @@ type RoleFilter = 'all' | 'User' | 'ServiceProvider';
         </div>
       </div>
 
-      <!-- Role filter tabs -->
       <div class="flex gap-2 mb-4">
         @for (opt of roleOptions; track opt.value) {
           <button (click)="setFilter(opt.value)"
@@ -180,7 +177,6 @@ export class AdminUsers implements OnInit {
         error: () => this.loading.set(false),
       });
     } else {
-      // All: fetch from both endpoints, merge with roles, deduplicate by id
       let all: any[] = [];
       const seen = new Set<string>();
       let done = 0;
@@ -206,17 +202,8 @@ export class AdminUsers implements OnInit {
     }
   }
 
-  nextPage(): void {
-    this.page.update((p) => p + 1);
-    this.loadUsers();
-  }
-
-  prevPage(): void {
-    if (this.page() > 1) {
-      this.page.update((p) => p - 1);
-      this.loadUsers();
-    }
-  }
+  nextPage(): void { this.page.update((p) => p + 1); this.loadUsers(); }
+  prevPage(): void { if (this.page() > 1) { this.page.update((p) => p - 1); this.loadUsers(); } }
 
   deleteUser(id: string): void {
     if (!confirm('Deactivate this user?')) return;
