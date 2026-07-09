@@ -18,21 +18,10 @@ export class ToastService {
     setTimeout(() => this.remove(id), duration);
   }
 
-  success(message: string): void {
-    this.add(message, 'success');
-  }
-
-  error(message: string): void {
-    this.add(message, 'error');
-  }
-
-  info(message: string): void {
-    this.add(message, 'info');
-  }
-
-  warning(message: string): void {
-    this.add(message, 'warning');
-  }
+  success(message: string): void { this.add(message, 'success'); }
+  error(message: string): void { this.add(message, 'error'); }
+  info(message: string): void { this.add(message, 'info'); }
+  warning(message: string): void { this.add(message, 'warning'); }
 
   remove(id: number): void {
     this.toastsSignal.update((t) => t.filter((toast) => toast.id !== id));

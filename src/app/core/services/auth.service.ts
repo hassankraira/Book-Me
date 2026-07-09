@@ -1,11 +1,10 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { User } from '../models';
 
 const ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
-function decodeJwtRole(token: string): string | null {
+function getRoleFromToken(token: string): string | null {
   try {
     const parts = token.split('.');
     if (parts.length !== 3) return null;
@@ -13,12 +12,23 @@ function decodeJwtRole(token: string): string | null {
     const role = payload[ROLE_CLAIM];
     if (!role) return null;
     const roles = Array.isArray(role) ? role : [role];
-    const lowerRoles = roles.map((r: string) => r.toLowerCase());
-    if (lowerRoles.includes('admin')) return 'Admin';
-    if (lowerRoles.includes('serviceprovider')) return 'ServiceProvider';
-    if (lowerRoles.includes('user')) return 'User';
+    const lower = roles.map((r: string) => r.toLowerCase());
+    if (lower.includes('admin')) return 'Admin';
+    if (lower.includes('serviceprovider')) return 'ServiceProvider';
+    if (lower.includes('user')) return 'User';
     return roles[0] || null;
   } catch {
+    return null;
+  }
+}
+
+function getStoredUser(): User | null {
+  try {
+    const raw = localStorage.getItem('bookme_user');
+    if (!raw || raw === 'undefined' || raw === 'null') return null;
+    return JSON.parse(raw);
+  } catch {
+    localStorage.removeItem('bookme_user');
     return null;
   }
 }
@@ -27,47 +37,36 @@ function decodeJwtRole(token: string): string | null {
 export class AuthService {
   private readonly router = inject(Router);
 
-  private readonly userSignal = signal<User | null>(this.getStoredUser());
+  private readonly userSignal = signal<User | null>(getStoredUser());
   private readonly tokenSignal = signal<string | null>(localStorage.getItem('bookme_token'));
 
   readonly user = this.userSignal.asReadonly();
   readonly token = this.tokenSignal.asReadonly();
   readonly isAuthenticated = computed(() => !!this.tokenSignal());
+
   readonly role = computed(() => {
     const override = localStorage.getItem('bookme_role_override');
     if (override) return override;
     const token = this.tokenSignal();
     if (token) {
-      const jwtRole = decodeJwtRole(token);
+      const jwtRole = getRoleFromToken(token);
       if (jwtRole) return jwtRole;
     }
-    const userRole = this.userSignal()?.role;
-    return userRole || null;
+    return this.userSignal()?.role || null;
   });
+
   readonly isAdmin = computed(() => this.role() === 'Admin');
   readonly isProvider = computed(() => this.role() === 'ServiceProvider');
   readonly isCustomer = computed(() => this.role() === 'User');
   readonly userName = computed(() => {
     const u = this.userSignal();
-    if (!u || !u.firstName || !u.lastName) return '';
+    if (!u) return '';
     return `${u.firstName} ${u.lastName}`;
   });
 
-  private getStoredUser(): User | null {
-    try {
-      const raw = localStorage.getItem('bookme_user');
-      if (!raw || raw === 'undefined' || raw === 'null') return null;
-      const user = JSON.parse(raw);
-      return user && typeof user === 'object' ? user : null;
-    } catch {
-      localStorage.removeItem('bookme_user');
-      return null;
-    }
-  }
-
   saveAuth(token: string, user: User): void {
     localStorage.setItem('bookme_token', token ?? '');
-    localStorage.setItem('bookme_user', user ? JSON.stringify(user) : '');
+    localStorage.setItem('bookme_user', JSON.stringify(user));
     this.tokenSignal.set(token ?? null);
     this.userSignal.set(user ?? null);
   }
