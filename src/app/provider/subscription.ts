@@ -6,7 +6,6 @@ import { SubscriptionPlan, Subscription } from '../core/models';
 
 @Component({
   selector: 'app-provider-subscription',
-  standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
     <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -26,7 +25,6 @@ import { SubscriptionPlan, Subscription } from '../core/models';
             <div class="h-12 bg-slate-200 rounded w-24"></div>
           </div>
         } @else if (currentSub(); as cp) {
-          <!-- Current Plan -->
           <div class="rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden mb-8">
             <div class="px-6 sm:px-8 py-6 border-b border-slate-100">
               <div class="flex items-center justify-between">
@@ -66,7 +64,6 @@ import { SubscriptionPlan, Subscription } from '../core/models';
             </div>
           </div>
         } @else if (valid() === false) {
-          <!-- No subscription -->
           <div class="rounded-2xl bg-yellow-50 border border-yellow-200 p-6 mb-8 shadow-md">
             <div class="flex items-center gap-4">
               <span class="text-3xl">⚠️</span>
@@ -78,7 +75,6 @@ import { SubscriptionPlan, Subscription } from '../core/models';
           </div>
         }
 
-        <!-- All Plans -->
         @if (plans().length > 0) {
           <h2 class="text-xl font-bold text-slate-900 mb-6">{{ valid() ? 'Available Plans' : 'Choose a Plan' }}</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

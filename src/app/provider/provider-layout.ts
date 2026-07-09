@@ -4,19 +4,17 @@ import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-provider-layout',
-  standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
     <div class="flex min-h-screen bg-slate-50">
-      <aside class="hidden lg:flex flex-col w-60   h-full pt-16 z-30">
+      <aside class="hidden lg:flex flex-col w-60 h-full pt-16 z-30">
         <div class="px-4 pt-6 pb-4 border-b border-slate-100">
           <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Menu</p>
         </div>
         <nav class="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
           <a routerLink="/dashboard" routerLinkActive="-50 text-vibe-700 font-semibold border-r-2 border-vibe-500"
             [routerLinkActiveOptions]="{exact:true}"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all  text-vibe-700 font-semibold border-r-2 border-vibe-500
-">
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all text-vibe-700 font-semibold border-r-2 border-vibe-500">
             <span class="text-base">📊</span> Dashboard
           </a>
           <a routerLink="/dashboard/bookings" routerLinkActive="-50 text-vibe-700 font-semibold border-r-2 border-vibe-500"
@@ -51,7 +49,7 @@ import { AuthService } from '../core/services/auth.service';
         </div>
       </aside>
 
-      <main class="flex-1  min-h-screen pt-16">
+      <main class="flex-1 min-h-screen pt-16">
         <router-outlet />
       </main>
     </div>

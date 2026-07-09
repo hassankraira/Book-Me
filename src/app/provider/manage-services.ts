@@ -1,16 +1,13 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ToastService } from '../core/services/toast.service';
 import { ServiceItem } from '../core/models';
 
-
 @Component({
   selector: 'app-manage-services',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   template: `
     <div class="p-6">
       <div class="flex items-center justify-between mb-6">

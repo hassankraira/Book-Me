@@ -1,6 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from '../core/services/api.service';
@@ -10,8 +9,7 @@ import { Observer } from 'rxjs';
 
 @Component({
   selector: 'app-service-form',
-  standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, FormsModule],
   template: `
     <div class="p-6">
       <div class="mb-6">
@@ -116,8 +114,7 @@ import { Observer } from 'rxjs';
             </div>
           </div>
 
-          <!-- Availability -->
-          <div class="rounded-xl  p-5 border border-vibe-100">
+          <div class="rounded-xl p-5 border border-vibe-100">
             <div class="flex items-center gap-3 mb-4">
               <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-vibe-500 to-purple-600 flex items-center justify-center text-white text-lg">⏰</div>
               <div>
@@ -186,7 +183,6 @@ export class ServiceForm implements OnInit {
     this.api.getService(this.editId).subscribe({
       next: (res) => {
         const s = res.data as any;
-        // Map returned service fields into the form. Support multiple possible shapes from API.
         const categoryId = s.categoryId ?? this.findCategoryIdByName(s.categoryName);
         const cityId = s.cityId ?? this.findCityIdByName(s.cityName);
 
@@ -199,7 +195,6 @@ export class ServiceForm implements OnInit {
           cityId: cityId ?? 0,
         };
 
-        // Initialize time inputs from the service values (DB) if present.
         this.startTime = this.formatTimeForInput(s.startWork ?? s.startTime ?? s.start_work ?? '');
         this.endTime = this.formatTimeForInput(s.endWork ?? s.endTime ?? s.end_work ?? '');
       },
@@ -221,14 +216,11 @@ export class ServiceForm implements OnInit {
 
   private formatTimeForInput(value?: string): string {
     if (!value) return '';
-    // Strip date portion if present (ISO format) and seconds
     let time = value.includes('T') ? value.split('T').pop() ?? value : value;
     const m = time.match(/(\d{1,2}):(\d{2})/);
     if (!m) return '';
     return `${String(m[1]).padStart(2, '0')}:${m[2]}`;
   }
-
-
 
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;

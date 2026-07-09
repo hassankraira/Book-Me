@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
 import { NotificationService } from '../core/services/notification.service';
@@ -7,8 +6,7 @@ import { Booking } from '../core/models';
 
 @Component({
   selector: 'app-incoming-bookings',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   styles: [`
     @keyframes expandRow {
       from { max-height: 0; opacity: 0; transform: translateY(-8px); }
@@ -66,7 +64,6 @@ import { Booking } from '../core/models';
       @if (bookings().length > 0) {
         <div class="rounded-2xl bg-white shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
 
-          <!-- === MONTH GRID === -->
           <div class="p-6">
             <div class="flex items-center justify-between mb-6">
               <button (click)="prevMonth()" [disabled]="viewMode() === 'day'"
@@ -110,7 +107,6 @@ import { Booking } from '../core/models';
             </div>
           </div>
 
-          <!-- === ZOOM CELL: the day card expands to fill the container === -->
           @if (viewMode() === 'day' && zoomedCell(); as zc) {
             <div class="zoom-cell absolute bg-white overflow-hidden z-10"
               [style.top.px]="zc.top"

@@ -1,14 +1,12 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../core/services/auth.service';
 import { ApiService } from '../core/services/api.service';
 import { Booking } from '../core/models';
 
 @Component({
   selector: 'app-provider-dashboard',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   template: `
     <div class="p-4 sm:p-6 lg:p-8">
       <div class="mb-8">
