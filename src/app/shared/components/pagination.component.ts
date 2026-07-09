@@ -1,26 +1,21 @@
 import { Component, output, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pagination',
-  standalone: true,
-  imports: [CommonModule],
   template: `
     @if (totalPages() > 1) {
       <div class="flex items-center justify-center gap-2 mt-8">
         <button
           [disabled]="currentPage() <= 1"
           (click)="pageChange.emit(currentPage() - 1)"
-          class="rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-40 hover:bg-gray-100"
-        >
+          class="rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-40 hover:bg-gray-100">
           Previous
         </button>
 
         @for (p of pages(); track p) {
           <button
             (click)="pageChange.emit(p)"
-            [class]="'rounded-lg px-3 py-2 text-sm font-medium ' + (p === currentPage() ? 'bg-vibe-600 text-white' : 'border hover:bg-gray-100')"
-          >
+            [class]="'rounded-lg px-3 py-2 text-sm font-medium ' + (p === currentPage() ? 'bg-vibe-600 text-white' : 'border hover:bg-gray-100')">
             {{ p }}
           </button>
         }
@@ -28,8 +23,7 @@ import { CommonModule } from '@angular/common';
         <button
           [disabled]="currentPage() >= totalPages()"
           (click)="pageChange.emit(currentPage() + 1)"
-          class="rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-40 hover:bg-gray-100"
-        >
+          class="rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-40 hover:bg-gray-100">
           Next
         </button>
       </div>

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
@@ -6,15 +5,9 @@ import { ApiService } from './core/services/api.service';
 import { NotificationService } from './core/services/notification.service';
 import { ToastComponent } from './shared/components/toast.component';
 
-interface NavItem {
-  label: string;
-  route: string;
-  show: 'always' | 'auth' | 'guest' | 'customer' | 'provider' | 'admin';
-}
-
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, CommonModule, ToastComponent,RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, ToastComponent, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -33,8 +26,7 @@ export class App {
 
   private getStoredTheme(): boolean {
     if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('bookme-theme');
-    return saved === 'dark';
+    return localStorage.getItem('bookme-theme') === 'dark';
   }
 
   ngOnInit(): void {
@@ -51,9 +43,7 @@ export class App {
   readonly showUserMenu = signal(false);
   readonly showNotifications = signal(false);
 
-  toggleNotifications(): void {
-    this.showNotifications.update((v) => !v);
-  }
+  toggleNotifications(): void { this.showNotifications.update((v) => !v); }
 
   formatNotifDate(iso: string): string {
     const d = new Date(iso);
@@ -74,7 +64,6 @@ export class App {
     if (role === 'Admin') {
       items.push({ label: 'Admin Dashboard', route: '/admin/dashboard' });
     }
-    
     if (role && role !== 'Admin') {
       items.push({ label: 'My Bookings', route: '/customer/my-bookings' });
     }
@@ -113,9 +102,7 @@ export class App {
     localStorage.setItem('bookme-theme', dark ? 'dark' : 'light');
   }
 
-  toggleUserMenu() {
-    this.showUserMenu.update((v) => !v);
-  }
+  toggleUserMenu() { this.showUserMenu.update((v) => !v); }
 
   @HostListener('document:click', ['$event'])
   onDocClick(event: MouseEvent) {
@@ -128,7 +115,7 @@ export class App {
     }
   }
 
-  readonly navItems: NavItem[] = [
+  readonly navItems = [
     { label: 'Home', route: '/Home', show: 'always' },
     { label: 'Categories', route: '/Categories', show: 'always' },
     { label: 'My Bookings', route: '/customer/my-bookings', show: 'auth' },
@@ -154,13 +141,8 @@ export class App {
     return this.isScrolled() ? `${base} app-shell-navbar is-scrolled` : `${base} app-shell-navbar`;
   });
 
-  toggleMenu() {
-    this.isMenuOpen.update((value) => !value);
-  }
-
-  closeMenu() {
-    this.isMenuOpen.set(false);
-  }
+  toggleMenu() { this.isMenuOpen.update((value) => !value); }
+  closeMenu() { this.isMenuOpen.set(false); }
 
   logout() {
     this.auth.logout();
@@ -168,7 +150,5 @@ export class App {
   }
 
   @HostListener('window:scroll')
-  onWindowScroll() {
-    this.isScrolled.set(window.scrollY > 40);
-  }
+  onWindowScroll() { this.isScrolled.set(window.scrollY > 40); }
 }
