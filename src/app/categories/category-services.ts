@@ -1,19 +1,15 @@
 ﻿import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ServiceItem } from '../core/models';
 
-
 @Component({
   selector: 'app-category-services',
-  standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, FormsModule],
   template: `
     <div class="min-h-screen bg-slate-50">
-      <!-- Category Hero Banner -->
       <div class="bg-white border-b border-slate-100">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
           <a routerLink="/Categories" class="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-vibe-600 transition-colors mb-4">
@@ -36,7 +32,6 @@ import { ServiceItem } from '../core/models';
         </div>
       </div>
 
-      <!-- Search + Filters -->
       <div class="bg-white border-b border-slate-100 sticky top-0 z-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
           <div class="flex flex-col sm:flex-row gap-3">

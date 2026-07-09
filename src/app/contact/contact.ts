@@ -1,28 +1,11 @@
 ﻿import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { ToastService } from '../core/services/toast.service';
-
-interface ContactInfo {
-  icon: string;
-  title: string;
-  detail: string;
-  subtitle?: string;
-  bg: string;
-}
-
-interface FaqItem {
-  q: string;
-  a: string;
-  open: boolean;
-}
 
 @Component({
   selector: 'app-contact',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule],
   template: `
-    <!-- Hero -->
     <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       <div class="hero-blob-1 absolute -top-40 left-1/4 h-[500px] w-[500px] rounded-full bg-vibe-200/20 blur-3xl"></div>
       <div class="hero-blob-2 absolute -bottom-40 right-1/4 h-[400px] w-[400px] rounded-full bg-purple-200/15 blur-3xl"></div>
@@ -41,12 +24,10 @@ interface FaqItem {
       </div>
     </section>
 
-    <!-- Contact Form + Info -->
     <section class="bg-slate-50 after-hero-surface py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-5 gap-8 items-start">
 
-          <!-- Contact Info -->
           <div class="lg:col-span-2 space-y-5">
             @for (info of contactInfo; track info.title) {
               <div class="group rounded-2xl bg-white border border-slate-100 p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-vibe-200">
@@ -64,7 +45,6 @@ interface FaqItem {
               </div>
             }
 
-            <!-- Social -->
             <div class="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm">
               <h3 class="text-sm font-semibold text-slate-900 mb-4">Follow Us</h3>
               <div class="flex gap-3">
@@ -88,7 +68,6 @@ interface FaqItem {
             </div>
           </div>
 
-          <!-- Form -->
           <div class="lg:col-span-3 rounded-[28px] bg-white border border-slate-100 p-6 sm:p-8 shadow-lg shadow-slate-200/40">
             <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Send Us a Message</h2>
             <p class="mt-1 text-sm text-slate-400">We typically respond within 24 hours</p>
@@ -112,7 +91,7 @@ interface FaqItem {
                   <label class="block text-sm font-medium text-slate-700 mb-1.5" for="email">Email Address</label>
                   <input #emailRef="ngModel" id="email" type="email" [(ngModel)]="email" name="email" required
                     class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition-all focus:border-vibe-400 focus:ring-2 focus:ring-vibe-500/15 placeholder:text-slate-400"
-                    placeholder="john&#64;example.com"
+                    placeholder="john@example.com"
                     [class.input-error]="emailRef.invalid && (emailRef.dirty || emailRef.touched || submitted())" />
                   @if (emailRef.invalid && (emailRef.dirty || emailRef.touched || submitted())) {
                     <div class="field-error">
@@ -162,7 +141,6 @@ interface FaqItem {
       </div>
     </section>
 
-    <!-- Map -->
     <section class="bg-white py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12">
@@ -180,7 +158,6 @@ interface FaqItem {
       </div>
     </section>
 
-    <!-- FAQ -->
     <section class="bg-slate-50 py-20 sm:py-28">
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12">
@@ -223,16 +200,14 @@ export class Contact {
   readonly submitting = signal(false);
   readonly submitted = signal(false);
 
-  readonly contactInfo: ContactInfo[] = [
-    { icon: '📍', title: 'Our Address', detail: '123 Business Street, Amman, Jordan', subtitle: 'Downtown district', bg: 'bg-vibe-50' },
-    { icon: '📧', title: 'Email Us', detail: 'support@bookme.com', subtitle: 'We reply within 24h', bg: 'bg-emerald-50' },
-    { icon: '📞', title: 'Call Us', detail: '+1 (555) 123-4567', subtitle: 'Mon–Fri, 9 AM – 6 PM', bg: 'bg-purple-50' },
+  readonly contactInfo = [
+    { icon: '📍', title: 'Our Address', detail: 'Buildings 7, Madinaty, 19519, Egypt', subtitle: 'New Cairo', bg: 'bg-vibe-50' },
+    { icon: '📧', title: 'Email Us', detail: 'BookMe@gmail.com', subtitle: 'We reply within 24h', bg: 'bg-emerald-50' },
+    { icon: '📞', title: 'Call Us', detail: '+20 103 114 7674', subtitle: 'Mon–Fri, 9 AM – 6 PM', bg: 'bg-purple-50' },
     { icon: '🕐', title: 'Business Hours', detail: 'Monday – Friday, 9:00 AM – 6:00 PM', subtitle: 'Weekend inquiries replied on Monday', bg: 'bg-amber-50' },
   ];
 
-
-
-  readonly faqItems: FaqItem[] = [
+  readonly faqItems = [
     { q: 'How do I book a service?', a: 'Simply browse our categories, pick a service, choose your preferred date and time, and confirm your booking. You\'ll receive an instant confirmation and the provider will be notified right away.', open: false },
     { q: 'Can I cancel or reschedule a booking?', a: 'Yes, you can cancel or reschedule bookings from your "My Bookings" page. Please note that some providers may have specific cancellation policies.', open: false },
     { q: 'How do I become a service provider?', a: 'Register for an account, navigate to your profile, and click "Become a Provider". Choose a subscription plan that fits your needs and start listing your services.', open: false },

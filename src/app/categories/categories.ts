@@ -1,14 +1,11 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { Category } from '../core/models';
 
-
 @Component({
   selector: 'app-categories',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   templateUrl: './categories.html',
 })
 export class Categories implements OnInit {

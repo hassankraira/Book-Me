@@ -1,30 +1,10 @@
 ﻿import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-interface TeamMember {
-  name: string;
-  role: string;
-  initials: string;
-  color: string;
-}
-
-interface Feature {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-interface Stat {
-  value: string;
-  label: string;
-}
-
 @Component({
   selector: 'app-about',
-  standalone: true,
   imports: [RouterLink],
   template: `
-    <!-- Hero -->
     <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white">
       <div class="hero-blob-1 absolute -top-40 right-1/4 h-[500px] w-[500px] rounded-full bg-vibe-200/20 blur-3xl"></div>
       <div class="hero-blob-2 absolute -bottom-40 left-1/4 h-[400px] w-[400px] rounded-full bg-purple-200/15 blur-3xl"></div>
@@ -45,7 +25,6 @@ interface Stat {
       </div>
     </section>
 
-    <!-- Stats -->
     <section class="bg-white after-hero-surface border-y border-slate-100">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -59,7 +38,6 @@ interface Stat {
       </div>
     </section>
 
-    <!-- Mission & Story -->
     <section class="bg-slate-50 py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -97,7 +75,6 @@ interface Stat {
       </div>
     </section>
 
-    <!-- Why Choose Us -->
     <section class="bg-white py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -117,7 +94,6 @@ interface Stat {
       </div>
     </section>
 
-    <!-- Team -->
     <section class="bg-slate-50 py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -142,7 +118,6 @@ interface Stat {
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="relative overflow-hidden bg-white py-20 sm:py-28">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-vibe-200/15 blur-3xl"></div>
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center relative">
@@ -164,14 +139,14 @@ interface Stat {
   `,
 })
 export class About {
-  readonly stats: Stat[] = [
+  readonly stats = [
     { value: '15K+', label: 'Bookings Completed' },
     { value: '500+', label: 'Trusted Providers' },
     { value: '50+', label: 'Service Categories' },
     { value: '4.9', label: 'Average Rating' },
   ];
 
-  readonly features: Feature[] = [
+  readonly features = [
     { icon: '🔍', title: 'Easy Discovery', description: 'Browse hundreds of services across multiple categories. Filter by location, price, and availability to find exactly what you need.' },
     { icon: '📅', title: 'Instant Booking', description: 'See real-time availability and book appointments instantly. No phone calls, no back-and-forth — just seamless scheduling.' },
     { icon: '⭐', title: 'Verified Reviews', description: 'Read honest ratings and reviews from real customers. Make informed decisions with confidence.' },
@@ -180,7 +155,7 @@ export class About {
     { icon: '📱', title: 'Mobile Friendly', description: 'Book from anywhere, on any device. Our platform is fully responsive and optimized for on-the-go use.' },
   ];
 
-  readonly team: TeamMember[] = [
+  readonly team = [
     { name: 'Ahmed Hassan', role: 'Founder & CEO', initials: 'AH', color: 'bg-gradient-to-br from-vibe-500 to-vibe-700' },
     { name: 'Sara Khalid', role: 'Head of Product', initials: 'SK', color: 'bg-gradient-to-br from-purple-500 to-purple-700' },
     { name: 'Omar Rashed', role: 'Lead Engineer', initials: 'OR', color: 'bg-gradient-to-br from-blue-500 to-blue-700' },
