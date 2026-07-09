@@ -1,15 +1,12 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { ServiceItem, Category, City } from '../core/models';
 
-
 @Component({
   selector: 'app-services-list',
-  standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, FormsModule],
   template: `
     <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div class="relative overflow-hidden bg-gradient-to-br from-vibe-50 via-purple-50 to-white text-slate-900">
@@ -209,18 +206,12 @@ export class ServicesList implements OnInit {
 
     if (this.searchTerm.trim()) {
       this.api.getServiceByName(this.searchTerm.trim()).subscribe({
-        next: (res) => {
-          this.services.set(res.data);
-          this.loading.set(false);
-        },
+        next: (res) => { this.services.set(res.data); this.loading.set(false); },
         error: () => this.loading.set(false),
       });
     } else if (catId) {
       this.api.getServicesByCategory(catId).subscribe({
-        next: (res) => {
-          this.services.set(res.data);
-          this.loading.set(false);
-        },
+        next: (res) => { this.services.set(res.data); this.loading.set(false); },
         error: () => this.loading.set(false),
       });
     } else if (cityId) {
@@ -233,4 +224,3 @@ export class ServicesList implements OnInit {
     }
   }
 }
-

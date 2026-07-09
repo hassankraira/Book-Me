@@ -1,15 +1,12 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ServiceItem } from '../core/models';
 
-
 @Component({
   selector: 'app-service-detail',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   template: `
     <div class="min-h-screen bg-white">
       <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">

@@ -1,6 +1,5 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
@@ -9,8 +8,7 @@ import { ServiceItem, TimeSlot, TimeSlotRange } from '../core/models';
 
 @Component({
   selector: 'app-create-booking',
-  standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, FormsModule],
   template: `
     <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div class="mx-auto max-w-4xl px-6 py-10">
@@ -71,7 +69,6 @@ import { ServiceItem, TimeSlot, TimeSlotRange } from '../core/models';
         }
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Calendar -->
           <div class="rounded-2xl bg-white shadow-lg shadow-slate-200/50 p-6 border border-slate-100">
             <div class="flex items-center justify-between mb-6">
               <button (click)="prevMonth()" class="h-10 w-10 rounded-xl border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-all">
@@ -110,7 +107,6 @@ import { ServiceItem, TimeSlot, TimeSlotRange } from '../core/models';
             </div>
           </div>
 
-          <!-- Time slots & booking -->
           <div>
             @if (selectedDate()) {
               <div class="rounded-2xl bg-white shadow-lg shadow-slate-200/50 p-6 border border-slate-100 mb-6">
@@ -204,10 +200,7 @@ export class CreateBooking implements OnInit {
     }
     for (let d = 1; d <= lastDay.getDate(); d++) {
       const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      const isDisabled = date < this.todayStr;
-      const isToday = date === this.todayStr;
-      const isSelected = date === this.selectedDate();
-      days.push({ num: d, date, disabled: isDisabled, today: isToday, selected: isSelected });
+      days.push({ num: d, date, disabled: date < this.todayStr, today: date === this.todayStr, selected: date === this.selectedDate() });
     }
     const remaining = 42 - days.length;
     for (let d = 1; d <= remaining; d++) {
@@ -312,10 +305,7 @@ export class CreateBooking implements OnInit {
     if (!slot || !date) return;
     this.submitting.set(true);
     const startDateTime = `${date}T${slot.startTime}:00`;
-    this.api.createBooking({
-      serviceId: this.serviceId,
-      startDateTime,
-    }).subscribe({
+    this.api.createBooking({ serviceId: this.serviceId, startDateTime }).subscribe({
       next: (res) => {
         if (res.isSuccess) { this.toast.success('Booking created successfully!'); this.router.navigate(['/customer/my-bookings']); }
         else { this.error.set(res.message); }

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { ToastService } from '../core/services/toast.service';
 import { NotificationService } from '../core/services/notification.service';
@@ -8,8 +7,7 @@ import { Booking } from '../core/models';
 
 @Component({
   selector: 'app-my-bookings',
-  standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   styles: [`
     @keyframes popIn {
       from { transform: scale(0) rotate(-8deg); opacity: 0; }
@@ -71,7 +69,6 @@ import { Booking } from '../core/models';
         @if (bookings().length > 0) {
           <div class="rounded-2xl bg-white shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden relative">
 
-            <!-- === Month Calendar === -->
             <div class="transition-all duration-300"
               [style.opacity]="viewMode() === 'day' ? '0' : '1'"
               [style.pointerEvents]="viewMode() === 'day' ? 'none' : 'auto'">
@@ -119,7 +116,6 @@ import { Booking } from '../core/models';
               </div>
             </div>
 
-            <!-- === Phase 1: Zoom in — big gradient number === -->
             @if (viewMode() === 'day' && !showDailyView() && selectedDate(); as sel) {
               <div class="absolute inset-0 z-10 flex items-center justify-center" style="background-color: color-mix(in srgb, var(--color-surface) 60%, transparent)">
                 <div class="pop-in w-44 h-44 rounded-[2.5rem] bg-gradient-to-br from-vibe-500 to-purple-500 flex items-center justify-center shadow-2xl shadow-vibe-500/50">
@@ -128,7 +124,6 @@ import { Booking } from '../core/models';
               </div>
             }
 
-            <!-- === Phase 2: Zoom out — expanding gradient + daily schedule === -->
             @if (showDailyView() && selectedDate(); as selDate) {
               <div class="absolute inset-0 z-10 flex flex-col">
                 <div class="zoom-out-bg absolute inset-0 bg-gradient-to-br from-vibe-500 to-purple-500 rounded-2xl"></div>
@@ -322,7 +317,6 @@ export class MyBookings implements OnInit, OnDestroy {
     if (day.disabled || !day.date) return;
     this.selectedDate.set(day.date);
     this.viewMode.set('day');
-
     setTimeout(() => {
       this.showDailyView.set(true);
     }, 700);
