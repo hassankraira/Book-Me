@@ -1,15 +1,13 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ToastService } from '../core/services/toast.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   template: `
     <section class="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4 py-16">
       <div class="absolute -top-40 right-1/4 h-[500px] w-[500px] rounded-full bg-vibe-200/20 blur-3xl"></div>
@@ -18,7 +16,6 @@ import { ToastService } from '../core/services/toast.service';
 
       <div class="relative w-full max-w-5xl animate-fade-in-up">
         <div class="grid lg:grid-cols-2 rounded-[32px] bg-white/80 backdrop-blur-sm shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-          <!-- Left: decorative panel -->
           <div class="hidden lg:flex flex-col justify-between bg-slate-50 border-r border-slate-100 p-10 sm:p-12 text-slate-900 relative overflow-hidden">
             <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-vibe-200/20 blur-3xl"></div>
             <div class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-purple-200/15 blur-3xl"></div>
@@ -39,7 +36,6 @@ import { ToastService } from '../core/services/toast.service';
             </div>
           </div>
 
-          <!-- Right: form -->
           <div class="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
             <div class="lg:hidden flex items-center gap-3 mb-8">
               <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-vibe-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-sm">

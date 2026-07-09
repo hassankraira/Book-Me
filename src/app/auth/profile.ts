@@ -1,16 +1,13 @@
 ﻿import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 import { AuthService } from '../core/services/auth.service';
 import { ToastService } from '../core/services/toast.service';
 
-
 @Component({
   selector: 'app-profile',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, RouterLink],
   template: `
     <div class="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div class="relative overflow-hidden bg-gradient-to-br from-vibe-50 via-purple-50 to-white text-slate-900">
@@ -175,8 +172,7 @@ export class Profile implements OnInit {
     this.pendingPhotoFile = file;
     const reader = new FileReader();
     reader.onload = () => {
-      const dataUrl = reader.result as string;
-      this.photoPreview.set(dataUrl);
+      this.photoPreview.set(reader.result as string);
     };
     reader.readAsDataURL(file);
   }
@@ -197,7 +193,6 @@ export class Profile implements OnInit {
         }
         this.toast.success(res.isSuccess ? 'Profile updated' : 'Profile saved locally');
         this.submitting.set(false);
-        // Reload profile to get server-side imagePath
         this.loadProfile();
       },
       error: () => {
@@ -211,4 +206,3 @@ export class Profile implements OnInit {
     });
   }
 }
-
