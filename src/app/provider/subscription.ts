@@ -2,7 +2,6 @@
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
-import { AuthService } from '../core/services/auth.service';
 import { SubscriptionPlan, Subscription } from '../core/models';
 
 @Component({
@@ -128,7 +127,6 @@ import { SubscriptionPlan, Subscription } from '../core/models';
 })
 export class ProviderSubscription implements OnInit {
   private readonly api = inject(ApiService);
-  private readonly auth = inject(AuthService);
 
   readonly plans = signal<SubscriptionPlan[]>([]);
   readonly valid = signal<boolean | null>(null);
@@ -153,14 +151,8 @@ export class ProviderSubscription implements OnInit {
   }
 
   private loadCurrentSubscription(): void {
-    this.api.getAllSubscriptions().subscribe({
-      next: (res) => {
-        const userId = this.auth.user()?.id;
-        const mine = res.data.filter((s) => s.serviceProviderId === userId);
-        const latest = mine.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())[0];
-        this.currentSub.set(latest || null);
-        this.loading.set(false);
-      },
+    this.api.getCurrentSubscription().subscribe({
+      next: (res) => { this.currentSub.set(res.data); this.loading.set(false); },
       error: () => this.loading.set(false),
     });
   }

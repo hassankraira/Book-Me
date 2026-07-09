@@ -237,6 +237,10 @@ export class ApiService {
     return this.http.get<ApiResponse<boolean>>(`${this.baseUrl}/Subscription/CheckValidity`);
   }
 
+  getCurrentSubscription(): Observable<ApiResponse<Subscription>> {
+    return this.http.get<ApiResponse<Subscription>>(`${this.baseUrl}/Subscription/GetSubscriptionById`);
+  }
+
   getAllSubscriptions(): Observable<ApiResponse<Subscription[]>> {
     return this.http.get<ApiResponse<Subscription[]>>(`${this.baseUrl}/Subscription/GetAllSubscriptions`);
   }
