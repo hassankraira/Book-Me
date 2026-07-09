@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://aboodhassan-001-site1.jtempurl.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
