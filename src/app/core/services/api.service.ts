@@ -108,7 +108,8 @@ export class ApiService {
   }
 
   createCategory(data: { name: string; description: string; imagePath?: string }): Observable<ApiResponse<Category>> {
-    return this.http.post<ApiResponse<Category>>(`${this.baseUrl}/Categories`, data);
+    const params = new HttpParams().set('Name', data.name).set('Description', data.description);
+    return this.http.post<ApiResponse<Category>>(`${this.baseUrl}/Categories`, null, { params });
   }
 
   updateCategory(id: number, name: string, description: string, imageFile?: File): Observable<ApiResponse<Category>> {
